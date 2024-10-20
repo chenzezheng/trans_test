@@ -48,5 +48,5 @@ jobs:
         with:
           python_ver: '3.8'
           spec: 'app.py'
-          upload_exe_with_name: 'app'
-          options: --onefile, --name "app",
+          upload_exe_with_name: 'app-windows'
+          options: --onefile, --name "app-windows",
