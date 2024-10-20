@@ -11,8 +11,8 @@ permissions:
   contents: read
 
 jobs:
-  pyinstaller-build:
-    runs-on: ubuntu-latest
+  pyinstaller-build-ubuntu:
+    runs-on: ubuntu-20.04
     steps:
       # - name: Setup Python
       #   - uses: actions/checkout@v4
@@ -26,6 +26,22 @@ jobs:
         with:
           python-version: '3.8'
           cache: 'pip'
+      - run: pip install -r requirements.txt
+      - name: Create Executable
+        uses: sayyid5416/pyinstaller@v1
+        with:
+          python_ver: '3.8'
+          spec: 'app.py'
+          upload_exe_with_name: 'app'
+          options: --onefile, --name "app",
+  pyinstaller-build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+          cache: 'pip' # caching pip dependencies
       - run: pip install -r requirements.txt
       - name: Create Executable
         uses: sayyid5416/pyinstaller@v1
