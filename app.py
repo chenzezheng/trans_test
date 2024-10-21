@@ -35,30 +35,30 @@ def create_app():
 
         return ret
 
-    # @app.route("/image", methods=["POST"])
-    # def imageTranslate():
-    #     import requests
+    @app.route("/image", methods=["POST"])
+    def imageTranslate():
+        import requests
         
-    #     url = 'https://aip.baidubce.com/file/2.0/mt/pictrans/v1?access_token=' + accessToken
-    #     file = request.files['image']
-    #     from_lang = 'en'#request.get_json()['from']
-    #     to_lang = 'zh'#request.get_json()['to']
-    #     # Build request
-    #     payload = {'from': from_lang, 'to': to_lang, 'v': '3', 'paste': '0'}
-    #     image = {'image': (file.filename, file.stream, "multipart/form-data")}
-    #     #Send request
-    #     r = requests.post(url, params = payload, files = image)
-    #     try:
-    #         contents = r.json()['data']['content']
-    #         paras = ''
-    #         for c in contents:
-    #             paras = paras + c['dst'] + '\n'
-    #         ret = jsonify({'statusCode': 200, 'msg': 'successful', 'result': paras})
-    #     except:
-    #         msg = r.json()['error_msg']
-    #         ret = jsonify({'statusCode': -1, 'msg': msg})
+        url = 'https://aip.baidubce.com/file/2.0/mt/pictrans/v1?access_token=' + accessToken
+        file = request.files['image']
+        from_lang = request.form['from']
+        to_lang = request.form['to']
+        # Build request
+        payload = {'from': from_lang, 'to': to_lang, 'v': '3', 'paste': '0'}
+        image = {'image': (file.filename, file.stream, "multipart/form-data")}
+        #Send request
+        r = requests.post(url, params = payload, files = image)
+        try:
+            contents = r.json()['data']['content']
+            paras = ''
+            for c in contents:
+                paras = paras + c['dst'] + '\n'
+            ret = jsonify({'statusCode': 200, 'msg': 'successful', 'result': paras})
+        except:
+            msg = r.json()['error_msg']
+            ret = jsonify({'statusCode': -1, 'msg': msg})
 
-    #     return ret
+        return ret
     
     return app
 
